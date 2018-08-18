@@ -27,7 +27,7 @@ var game = {
         document.getElementById("guesses-left").innerHTML = 5;
         for(var i = 0; i < chosenWord.length; i++){
             if(chosenWord[i] === " "){
-                guessingWord.push(" ");
+                guessingWord.push("&nbsp");
             }
             else {
                 guessingWord.push("_");
