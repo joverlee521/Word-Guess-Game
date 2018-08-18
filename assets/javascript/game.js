@@ -55,20 +55,22 @@ var game = {
     },
     // checks the user input is a valid letter of the alphabet
     validLetter(){
-        if(alphabet.indexOf(event.key) >= 0){
-            userInput = event.key;
+        if(alphabet.indexOf(event.key.toLowerCase()) >= 0){
+            userInput = event.key.toLowerCase();
         }
         else {
-            alert("Please only type in letters");
+            document.getElementById("modal-content").innerHTML = "Please choose a valid letter!"
+            $("#my-modal").modal("show");
         }
     },
-    // checks if user input is present in chosen word
+    // checks the user's input against the chosen word
     checkLetter(){
         var userInputIndex = chosenWord.indexOf(userInput);
         allUsedLetters = guessingWord.concat(alreadyGuessed);
         // checks if the user has used the same letter before
         if(allUsedLetters.indexOf(userInput) >= 0) {
-            alert("please choose a new letter");
+            document.getElementById("modal-content").innerHTML = "Please choose another letter!"
+            $("#my-modal").modal("show");
         }
         // if user input matches letter in chosen word then adds user input into empty string at correct index
         else if(userInputIndex >= 0){
@@ -79,7 +81,6 @@ var game = {
             }
             document.getElementById("current-word").innerHTML = guessingWord.join(" ");
         }
-        
         // if user input does NOT match then adds user input into letters already guessed and decrease guesses left
         else {
             guessesLeft--;
@@ -88,19 +89,48 @@ var game = {
             document.getElementById("already-guessed").innerHTML = alreadyGuessed; 
         }
     }, 
+    // To confirm if the user wins the game
+    winGame(){
+        // Run this once all the spaces are filled
+        if(guessingWord.indexOf("_") < 0){
+            // Change the "&nbsp" in the guessing word back to spaces
+            for(var k = 0; k < guessingWord.length; k++){
+                if (guessingWord[k] === "&nbsp"){
+                    guessingWord.splice(k, 1, " ");
+                }
+            }
+            // Compares guessing word to chosen word to confirm win
+            if(guessingWord.join('') === chosenWord) {
+                wins++;
+                document.getElementById("wins").innerHTML = wins;
+                document.getElementById("modal-content").innerHTML = "YOU GUESSED IT!"
+                setTimeout(function(){$("#my-modal").modal("show")}, 1000); 
+                setTimeout(game.startGame, 3000);
+            }
+        }
+    },
+    // To confirm if the user loses the game
+    loseGame(){
+        if(guessesLeft === 0) {
+            if(guessingWord.indexOf("_") >= 0){
+                losses++;
+                document.getElementById("losses").innerHTML = losses;
+                document.getElementById("modal-content").innerHTML = "OH NO! YOU LOST!"
+                $("#my-modal").modal("show");    
+                setTimeout(game.startGame, 3000);
+            }
+        }
+    },
     // Function for in game logic
     inGame() {
         document.onkeyup = function(event) {
             game.validLetter();
             game.checkLetter();
-            
+            game.winGame();
+            game.loseGame();
             
 
-            if(guessingWord.join('') === chosenWord) {
-                wins++;
-                document.getElementById("wins").innerHTML = wins;
-                game.startGame();
-            }
+            
 
         }    
         
