@@ -13,11 +13,11 @@
   </head>
   <body>
     <!-- Header for the page -->
-    <div class="jumbotron text-center">
+    <div class="jumbotron text-center p-3">
         <h1 class="display-4">Guess the Puppy!</h1>
         <p class="lead" id="start"> Press any key to start the game!</p>
     </div>
-    <!-- Modal for repeated letters -->
+    <!-- Modal for Reused Letters or Invalid input -->
     <div class="modal" tabindex="-1" role="dialog" id="my-modal">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -27,13 +27,31 @@
                         <h6 id="modal-content"></h6>
                     </div>
                     <div class="row justify-content-center">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal-button">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
           </div>
         </div>
     </div>
+    <!-- Modal for Winning or Losing -->
+    <div class="modal" tabindex="-1" role="dialog" id="win-lose-modal">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row justify-content-center m-5">
+                            <h6 id="modal-win-lose"></h6>
+                        </div>
+                        <div class="row justify-content-center">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="game.startGame()">Close</button>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    
     <!-- Main Content -->
     <div class="container">
         <div class="row align-items-center">
@@ -77,6 +95,16 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <footer class="footer-custom">
+                <!-- Copyright -->
+                <div class="footer-copyright text-center py-3">
+                    &copy; Jover Lee 2018 
+                </div>
+            </footer>
         </div>
     </div>
     

@@ -19,7 +19,7 @@ var wins = 0;
 var losses = 0;
 var guessesLeft = 5;
 
-// The actual game 
+// The game 
 var game = {
     // Function for how the game initializes wth first keyup
     initializeGame() {
@@ -40,6 +40,8 @@ var game = {
         chosenWord = dogBreeds[indexNumber];
         document.getElementById("img-id").src=dogPics[indexNumber];
         document.getElementById("guesses-left").innerHTML = 5;
+        document.getElementById("img-id").className = "";
+        document.getElementById("img-id").classList.add("opacity1");
         for(var i = 0; i < chosenWord.length; i++){
             if(chosenWord[i] === " "){
                 guessingWord.push("&nbsp");
@@ -89,6 +91,20 @@ var game = {
             document.getElementById("already-guessed").innerHTML = alreadyGuessed; 
         }
     }, 
+    changePicture(){
+        if (guessesLeft < 5){
+            document.getElementById("img-id").classList.add("opacity2");
+        }
+        if (guessesLeft < 4){
+            document.getElementById("img-id").classList.add("opacity3");
+        }
+        if (guessesLeft < 3) {
+            document.getElementById("img-id").classList.add("opacity4");
+        }
+        if (guessesLeft < 2) {
+            document.getElementById("img-id").classList.add("opacity5");
+        }
+    },
     // To confirm if the user wins the game
     winGame(){
         // Run this once all the spaces are filled
@@ -103,9 +119,10 @@ var game = {
             if(guessingWord.join('') === chosenWord) {
                 wins++;
                 document.getElementById("wins").innerHTML = wins;
-                document.getElementById("modal-content").innerHTML = "YOU GUESSED IT!"
-                setTimeout(function(){$("#my-modal").modal("show")}, 1000); 
-                setTimeout(game.startGame, 3000);
+                document.getElementById("img-id").classList.add("opacity5");
+                document.getElementById("modal-win-lose").innerHTML = "YOU GUESSED IT!"
+                setTimeout(function(){$("#win-lose-modal").modal("show")}, 500); 
+                // setTimeout(game.startGame, 3000);
             }
         }
     },
@@ -115,8 +132,8 @@ var game = {
             if(guessingWord.indexOf("_") >= 0){
                 losses++;
                 document.getElementById("losses").innerHTML = losses;
-                document.getElementById("modal-content").innerHTML = "OH NO! YOU LOST!"
-                $("#my-modal").modal("show");    
+                document.getElementById("modal-win-lose").innerHTML = "OH NO! YOU LOST!"
+                $("#win-lose-modal").modal("show");    
                 setTimeout(game.startGame, 3000);
             }
         }
@@ -126,14 +143,10 @@ var game = {
         document.onkeyup = function(event) {
             game.validLetter();
             game.checkLetter();
+            game.changePicture();
             game.winGame();
             game.loseGame();
-            
-
-            
-
-        }    
-        
+        }
     },
     
     
@@ -142,6 +155,7 @@ var game = {
 document.onkeyup = function() {
     if(isFirstKey) game.initializeGame();
     game.inGame();
+   
 }
 
 
