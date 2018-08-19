@@ -8,12 +8,14 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Cabin+Sketch|Delius+Swash+Caps|Fredericka+the+Great|Love+Ya+Like+A+Sister" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
   </head>
-  <body>
+  <body background="assets/images/pink-dust.png">
     <!-- Header for the page -->
-    <div class="jumbotron text-center p-3">
+    <div class="jumbotron text-center p-3 jumbotron-custom">
         <h1 class="display-4">Guess the Puppy!</h1>
         <p class="lead" id="start"> Press any key to start the game!</p>
     </div>
@@ -53,21 +55,21 @@
         </div>
     
     <!-- Main Content -->
-    <div class="container">
+    <div class="container pb-5">
         <div class="row align-items-center">
             <!-- Image of the current word -->
-            <div class="col-6">
-                <img id="img-id" src="assets/images/breeds.jpg" alt="Dogs">
+            <div class="container col-lg-6 col-11 p-2 img-custom">
+                    <img id="img-id" src="assets/images/breeds.jpg" alt="Dogs">
             </div>
-            <div class="col-6">
-                <div class="row">
+            <div class="col-lg-5 col-11">
+                <div class="row align-items-center">
                     <!-- Card containing the current word -->
                     <div class="card col-12 p-0">
                         <div class="card-header">
-                            <h5>Current Word </h5>
+                            <h5 class="card-title">Current Word </h5>
                         </div>
                         <div class="card-body">
-                            <p class= "card-text" id="current-word"></p>
+                            <p class= "card-text card-body-custom" id="current-word"></p>
                         </div>
                     </div>
                 </div>
@@ -76,27 +78,28 @@
                     <!-- Card containing the scoreboard -->
                     <div class="card col-5 p-0">
                         <div class="card-header">
-                          <h5>Scoreboard</h5>
+                          <h5 class="card-title">Scoreboard</h5>
                         </div>
                         <div class="card-body pr-5">
-                          <p class="card-text font-weight-bold">Wins: <span class="font-weight-normal" id="wins"></span></p>
-                          <p class="card-text font-weight-bold">Losses: <span class="font-weight-normal" id="losses"></span></p>
-                          <p class="card-text font-weight-bold">Guesses Left: <span class="font-weight-normal" id="guesses-left"></span></p>
+                          <p class="card-text font-weight-bold card-body-custom">Wins: <span class="font-weight-normal" id="wins"></span></p>
+                          <p class="card-text font-weight-bold card-body-custom">Losses: <span class="font-weight-normal" id="losses"></span></p>
+                          <p class="card-text font-weight-bold card-body-custom">Guesses Left: <span class="font-weight-normal" id="guesses-left"></span></p>
                         </div>
                     </div>
                     <!-- Card containing the letters already guessed -->
                     <div class="card col-6 p-0">
                         <div class="card-header">
-                          <h5>Letters Already Guessed: </h5>
+                          <h5 class="card-title">Letters Already Guessed: </h5>
                         </div>
                         <div class="card-body pr-5">
-                            <p id="already-guessed"></p>
+                            <p class="card-body-custom" id="already-guessed"></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Footer -->
     <div class="row">
         <div class="col">
             <footer class="footer-custom">
