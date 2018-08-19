@@ -11,8 +11,8 @@ var alreadyGuessed = [];
 // Array to include all used letters
 var allUsedLetters = [];
 
-var chosenWord = " ";
-var userInput = " ";
+var chosenWord = "";
+var userInput = "";
 var indexNumber = 0;
 var isFirstKey = true;
 var wins = 0;
@@ -61,7 +61,8 @@ var game = {
             userInput = event.key.toLowerCase();
         }
         else {
-            document.getElementById("modal-content").innerHTML = "Please choose a valid letter!"
+            console.log("validLetter else");
+            document.getElementById("modal-content").innerHTML = "Please choose a valid letter!";
             $("#my-modal").modal("show");
         }
     },
