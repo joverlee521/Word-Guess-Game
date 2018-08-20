@@ -46,7 +46,7 @@
                             <h6 id="modal-win-lose"></h6>
                         </div>
                         <div class="row justify-content-center">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="game.startGame()">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="game.startGame(); game.stopAudio(loseAudio); game.stopAudio(winAudio)">Close</button>
                         </div>
                     </div>
                 </div>
@@ -110,7 +110,6 @@
             </footer>
         </div>
     </div>
-    
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

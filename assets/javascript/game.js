@@ -19,6 +19,11 @@ var wins = 0;
 var losses = 0;
 var guessesLeft = 5;
 
+// Sounds effects game
+var loseAudio = new Audio("assets/sounds/sad-effect.mp3");
+var winAudio = new Audio("assets/sounds/win-effect.mp3");
+var errorAudio = new Audio("assets/sounds/error.mp3");
+
 // The game 
 var game = {
     // Function for how the game initializes wth first keyup
@@ -63,6 +68,7 @@ var game = {
         else {
             console.log("validLetter else");
             document.getElementById("modal-content").innerHTML = "Please choose a valid letter!";
+            this.playAudio(errorAudio);
             $("#my-modal").modal("show");
         }
     },
@@ -73,6 +79,7 @@ var game = {
         // checks if the user has used the same letter before
         if(allUsedLetters.indexOf(userInput) >= 0) {
             document.getElementById("modal-content").innerHTML = "Please choose another letter!"
+            this.playAudio(errorAudio);
             $("#my-modal").modal("show");
         }
         // if user input matches letter in chosen word then adds user input into empty string at correct index
@@ -122,8 +129,8 @@ var game = {
                 document.getElementById("wins").innerHTML = wins;
                 document.getElementById("img-id").classList.add("opacity5");
                 document.getElementById("modal-win-lose").innerHTML = "YOU GUESSED IT!"
+                this.playAudio(winAudio);
                 setTimeout(function(){$("#win-lose-modal").modal("show")}, 500); 
-                // setTimeout(game.startGame, 3000);
             }
         }
     },
@@ -132,12 +139,19 @@ var game = {
         if(guessesLeft === 0) {
             if(guessingWord.indexOf("_") >= 0){
                 losses++;
+                this.playAudio(loseAudio);
                 document.getElementById("losses").innerHTML = losses;
                 document.getElementById("modal-win-lose").innerHTML = "OH NO! YOU LOST!"
                 $("#win-lose-modal").modal("show");    
-                setTimeout(game.startGame, 3000);
             }
         }
+    },
+    // Play and stop audio files
+    playAudio(x){
+        x.play();
+    },
+    stopAudio(y){
+        y.pause();
     },
     // Function for in game logic
     inGame() {
