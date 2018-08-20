@@ -19,7 +19,7 @@ var wins = 0;
 var losses = 0;
 var guessesLeft = 5;
 
-// Sounds effects game
+// Sounds effects of the game
 var loseAudio = new Audio("assets/sounds/sad-effect.mp3");
 var winAudio = new Audio("assets/sounds/win-effect.mp3");
 var errorAudio = new Audio("assets/sounds/error.mp3");
