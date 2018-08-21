@@ -32,6 +32,7 @@ var game = {
         document.getElementById("wins").innerHTML = 0;
         document.getElementById("losses").innerHTML = 0;
         this.startGame();
+        $("#cartoonVideo").attr('src', '');
         isFirstKey = false;
     },
     // Starts the game by choosing a random dog breed with matching picture and provide empty array for current word
@@ -60,9 +61,6 @@ var game = {
             }
         }
         document.getElementById("current-word").innerHTML = guessingWord.join(" ");
-        // Removing the choosen word from the arrays so it doesn't get repeated
-        dogBreeds.splice(indexNumber,1);
-        dogPics.splice(indexNumber,1);
     },
     // checks the user input is a valid letter of the alphabet
     validLetter(){
@@ -136,8 +134,10 @@ var game = {
                 document.getElementById("wins").innerHTML = wins;
                 document.getElementById("img-id").classList.add("opacity5");
                 document.getElementById("modal-win-lose").innerHTML = "YOU GUESSED IT!"
+                winAudio.currentTime = 0;
                 this.playAudio(winAudio);
                 setTimeout(function(){$("#win-lose-modal").modal("show")}, 500); 
+                this.removeWords();
             }
         }
     },
@@ -147,10 +147,17 @@ var game = {
         if(guessesLeft === 0 && guessingWord.indexOf("_" >= 0)) {
             losses++;
             document.getElementById("losses").innerHTML = losses;
-            document.getElementById("modal-win-lose").innerHTML = "OH NO! YOU LOST!"
+            document.getElementById("modal-win-lose").innerHTML = "OH NO! YOU LOST!";
+            loseAudio.currentTime = 0;
             this.playAudio(loseAudio);
             $("#win-lose-modal").modal("show");    
+            this.removeWords();
         }
+    },
+    removeWords(){
+        // Removing the choosen word from the arrays so it doesn't get repeated
+        dogBreeds.splice(indexNumber,1);
+        dogPics.splice(indexNumber,1);
     },
     // Play and stop audio files
     playAudio(x){
@@ -167,8 +174,16 @@ var game = {
             game.changePicture();
             game.winGame();
             game.loseGame();
+            game.endGame();
         }
     },
+    endGame(){
+        var video = document.getElementById("end-video");
+        var url = $("#end-video").attr('src');
+        if(dogBreeds.length == 0){
+            $("#end-modal").modal("show"); 
+        }
+    }
     
     
 }

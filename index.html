@@ -39,23 +39,39 @@
     </div>
     <!-- Modal for Winning or Losing -->
     <div class="modal" tabindex="-1" role="dialog" id="win-lose-modal">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row justify-content-center m-5">
-                            <h6 id="modal-win-lose"></h6>
-                        </div>
-                        <div class="row justify-content-center">
-                            <!-- Pressing close button will restart the game and also stop sound effects -->
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="game.startGame(); game.stopAudio(loseAudio); game.stopAudio(winAudio)">Close</button>
-                        </div>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row justify-content-center m-5">
+                        <h6 id="modal-win-lose"></h6>
+                    </div>
+                    <div class="row justify-content-center">
+                        <!-- Pressing close button will restart the game and also stop sound effects -->
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="game.startGame(); game.stopAudio(loseAudio); game.stopAudio(winAudio)">Close</button>
                     </div>
                 </div>
-              </div>
             </div>
+          </div>
         </div>
-    
+    </div>
+    <!-- Modal for end of the game -->
+    <div class="modal" tabindex="-1" role="dialog" id="end-modal">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row justify-content-center m-5">
+                        <iframe src="https://giphy.com/embed/V2ZrZfHghzSNi" width="480" height="361" frameBorder="0"class="giphy-embed" allowFullScreen></iframe><p><ahref="https://giphy.com/gifs/V2ZrZfHghzSNi"></a></p>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.location.reload()">Reset the Game!</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
     <!-- Main Content -->
     <div class="container pb-5">
         <div class="row align-items-center">
