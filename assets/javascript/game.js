@@ -62,11 +62,17 @@ var game = {
         }
         document.getElementById("current-word").innerHTML = guessingWord.join(" ");
     },
-    // checks the user input is a valid letter of the alphabet
+    // checks the user input is a valid letter of the alphabet and if they are reusing letters
     validLetter(){
         // if it is a valid character, save the user's input
         if(alphabet.indexOf(event.key.toLowerCase()) >= 0){
             userInput = event.key.toLowerCase();
+            // if the user has used the same letter before, pop-up asks user to choose another letter
+            if(allUsedLetters.indexOf(userInput) >= 0) {
+                document.getElementById("modal-content").innerHTML = "Please choose another letter!"
+                this.playAudio(errorAudio);
+                $("#my-modal").modal("show");
+            }    
         }
         // if not valid, pop-up asks user to choose a valid letter
         else {
@@ -80,14 +86,8 @@ var game = {
     checkLetter(){
         var userInputIndex = chosenWord.indexOf(userInput);
         allUsedLetters = guessingWord.concat(alreadyGuessed);
-        // if the user has used the same letter before, pop-up asks user to choose another letter
-        if(allUsedLetters.indexOf(userInput) >= 0) {
-            document.getElementById("modal-content").innerHTML = "Please choose another letter!"
-            this.playAudio(errorAudio);
-            $("#my-modal").modal("show");
-        }
         // if user input matches letter in chosen word then adds user input into empty string at correct index
-        else if(userInputIndex >= 0){
+        if(userInputIndex >= 0){
             for (var j=0; j < guessingWord.length; j++){
                 if (chosenWord[j] == userInput) {
                     guessingWord.splice(j, 1, userInput);
