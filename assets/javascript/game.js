@@ -28,25 +28,29 @@ var errorAudio = new Audio("assets/sounds/error.mp3");
 var game = {
     // Function for how the game initializes wth first keyup
     initializeGame() {
-        game.initializeArray;
         document.getElementById("start").innerHTML = "Try to guess the breed of the puppy one letter at a time!";
-        this.startGame();
         document.getElementById("wins").innerHTML = 0;
         document.getElementById("losses").innerHTML = 0;
+        this.startGame();
         isFirstKey = false;
     },
     // Starts the game by choosing a random dog breed with matching picture and provide empty array for current word
     startGame() {
+        // Emptying all the arrays to have clean slate each time the game restarts
         guessingWord = [];
         alreadyGuessed = [];
+        document.getElementById("already-guessed").innerHTML = alreadyGuessed;
         allUsedLetters = [];
         guessesLeft = 5;
+        document.getElementById("guesses-left").innerHTML = 5;
+        // Picking a random index number to use for choosing dog breed and dog pic
         indexNumber = Math.floor(Math.random()*dogBreeds.length);
         chosenWord = dogBreeds[indexNumber];
         document.getElementById("img-id").src=dogPics[indexNumber];
-        document.getElementById("guesses-left").innerHTML = 5;
+        // Deletes all classes for dog pic so it can be returned to low opacity at the start of each game
         document.getElementById("img-id").className = "";
         document.getElementById("img-id").classList.add("opacity1");
+        // Setting up the guessing word array to have spaces matching the choosen word
         for(var i = 0; i < chosenWord.length; i++){
             if(chosenWord[i] === " "){
                 guessingWord.push("&nbsp");
@@ -56,15 +60,17 @@ var game = {
             }
         }
         document.getElementById("current-word").innerHTML = guessingWord.join(" ");
-        document.getElementById("already-guessed").innerHTML = alreadyGuessed;
+        // Removing the choosen word from the arrays so it doesn't get repeated
         dogBreeds.splice(indexNumber,1);
         dogPics.splice(indexNumber,1);
     },
     // checks the user input is a valid letter of the alphabet
     validLetter(){
+        // if it is a valid character, save the user's input
         if(alphabet.indexOf(event.key.toLowerCase()) >= 0){
             userInput = event.key.toLowerCase();
         }
+        // if not valid, pop-up asks user to choose a valid letter
         else {
             console.log("validLetter else");
             document.getElementById("modal-content").innerHTML = "Please choose a valid letter!";
@@ -76,7 +82,7 @@ var game = {
     checkLetter(){
         var userInputIndex = chosenWord.indexOf(userInput);
         allUsedLetters = guessingWord.concat(alreadyGuessed);
-        // checks if the user has used the same letter before
+        // if the user has used the same letter before, pop-up asks user to choose another letter
         if(allUsedLetters.indexOf(userInput) >= 0) {
             document.getElementById("modal-content").innerHTML = "Please choose another letter!"
             this.playAudio(errorAudio);
@@ -99,6 +105,7 @@ var game = {
             document.getElementById("already-guessed").innerHTML = alreadyGuessed; 
         }
     }, 
+    // changes opacity of picture when there is an incorrect guess 
     changePicture(){
         if (guessesLeft < 5){
             document.getElementById("img-id").classList.add("opacity2");
@@ -136,14 +143,13 @@ var game = {
     },
     // To confirm if the user loses the game
     loseGame(){
-        if(guessesLeft === 0) {
-            if(guessingWord.indexOf("_") >= 0){
-                losses++;
-                this.playAudio(loseAudio);
-                document.getElementById("losses").innerHTML = losses;
-                document.getElementById("modal-win-lose").innerHTML = "OH NO! YOU LOST!"
-                $("#win-lose-modal").modal("show");    
-            }
+        // User losses if there are no more guesses left AND if there are still spaces left in their guess
+        if(guessesLeft === 0 && guessingWord.indexOf("_" >= 0)) {
+            losses++;
+            document.getElementById("losses").innerHTML = losses;
+            document.getElementById("modal-win-lose").innerHTML = "OH NO! YOU LOST!"
+            this.playAudio(loseAudio);
+            $("#win-lose-modal").modal("show");    
         }
     },
     // Play and stop audio files
@@ -153,7 +159,7 @@ var game = {
     stopAudio(y){
         y.pause();
     },
-    // Function for in game logic
+    // All processes needed in the game after the initial onkeyup
     inGame() {
         document.onkeyup = function(event) {
             game.validLetter();
@@ -170,7 +176,6 @@ var game = {
 document.onkeyup = function() {
     if(isFirstKey) game.initializeGame();
     game.inGame();
-   
 }
 
 
