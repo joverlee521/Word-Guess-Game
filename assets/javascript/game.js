@@ -33,7 +33,6 @@ var game = {
         document.getElementById("wins").innerHTML = 0;
         document.getElementById("losses").innerHTML = 0;
         this.startGame();
-        $("#cartoonVideo").attr('src', '');
         isFirstKey = false;
     },
     // Starts the game by choosing a random dog breed with matching picture and provide empty array for current word
@@ -134,11 +133,13 @@ var game = {
                 wins++;
                 document.getElementById("wins").innerHTML = wins;
                 document.getElementById("img-id").classList.add("opacity5");
-                document.getElementById("modal-win-lose").innerHTML = "YOU GUESSED IT!"
-                winAudio.currentTime = 0;
-                this.playAudio(winAudio);
-                setTimeout(function(){$("#win-lose-modal").modal("show")}, 500); 
+                document.getElementById("modal-win-lose").innerHTML = "YOU GUESSED IT!";
                 this.removeWords();
+                if(dogBreeds.length > 0){
+                    winAudio.currentTime = 0;
+                    this.playAudio(winAudio);
+                    setTimeout(function(){$("#win-lose-modal").modal("show")}, 500);
+                }
             }
         }
     },
@@ -149,10 +150,12 @@ var game = {
             losses++;
             document.getElementById("losses").innerHTML = losses;
             document.getElementById("modal-win-lose").innerHTML = "OH NO! YOU LOST!";
-            loseAudio.currentTime = 0;
-            this.playAudio(loseAudio);
-            $("#win-lose-modal").modal("show");    
             this.removeWords();
+            if(dogBreeds.length > 0){
+                loseAudio.currentTime = 0;
+                this.playAudio(loseAudio);
+                $("#win-lose-modal").modal("show");    
+            }
         }
     },
     removeWords(){
@@ -175,22 +178,18 @@ var game = {
             this.playAudio(endAudio);
         }
     },
-    // All processes needed in the game after the initial onkeyup
-    inGame() {
-        document.onkeyup = function(event) {
-            game.validLetter();
-            game.checkLetter();
-            game.changePicture();
-            game.winGame();
-            game.loseGame();
-            game.endGame();
-        }
-    }  
 }
 
 document.onkeyup = function() {
-    if(isFirstKey) game.initializeGame();
-    game.inGame();
+    if(isFirstKey) {
+        game.initializeGame();
+    }
+    else {
+        game.validLetter();
+        game.checkLetter();
+        game.changePicture();
+        game.winGame();
+        game.loseGame();
+        game.endGame();
+    }
 }
-
-
