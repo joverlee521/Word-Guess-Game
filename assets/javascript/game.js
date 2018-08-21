@@ -138,7 +138,7 @@ var game = {
                 if(dogBreeds.length > 0){
                     winAudio.currentTime = 0;
                     this.playAudio(winAudio);
-                    setTimeout(function(){$("#win-lose-modal").modal("show")}, 500);
+                    setTimeout(function(){$("#win-lose-modal").modal({show: true, keyboard: false, backdrop: "static"})}, 500);
                 }
             }
         }
@@ -154,7 +154,7 @@ var game = {
             if(dogBreeds.length > 0){
                 loseAudio.currentTime = 0;
                 this.playAudio(loseAudio);
-                $("#win-lose-modal").modal("show");    
+                $("#win-lose-modal").modal({show: true, keyboard: false, backdrop: "static"});    
             }
         }
     },
