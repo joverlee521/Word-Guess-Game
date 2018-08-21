@@ -23,6 +23,7 @@ var guessesLeft = 5;
 var loseAudio = new Audio("assets/sounds/sad-effect.mp3");
 var winAudio = new Audio("assets/sounds/win-effect.mp3");
 var errorAudio = new Audio("assets/sounds/error.mp3");
+var endAudio = new Audio("assets/sounds/thats-all-folks.mp3");
 
 // The game 
 var game = {
@@ -166,6 +167,14 @@ var game = {
     stopAudio(y){
         y.pause();
     },
+    endGame(){
+        var video = document.getElementById("end-video");
+        var url = $("#end-video").attr('src');
+        if(dogBreeds.length == 0){
+            $("#end-modal").modal("show"); 
+            this.playAudio(endAudio);
+        }
+    },
     // All processes needed in the game after the initial onkeyup
     inGame() {
         document.onkeyup = function(event) {
@@ -176,16 +185,7 @@ var game = {
             game.loseGame();
             game.endGame();
         }
-    },
-    endGame(){
-        var video = document.getElementById("end-video");
-        var url = $("#end-video").attr('src');
-        if(dogBreeds.length == 0){
-            $("#end-modal").modal("show"); 
-        }
-    }
-    
-    
+    }  
 }
 
 document.onkeyup = function() {
