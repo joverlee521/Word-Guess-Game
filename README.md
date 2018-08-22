@@ -1,5 +1,5 @@
 # Word-Guess-Game
-Hangman Game - A simple game designed with html, css, boostrap, and javascript. 
+Hangman Game - A simple game designed with html, css, bootstrap, and javascript. 
 
 ## How to Play
 1. Start the game by pressing any key!
