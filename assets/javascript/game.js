@@ -95,6 +95,9 @@ var game = {
             }
             document.getElementById("current-word").innerHTML = guessingWord.join(" ");
         }
+        else if (userInputIndex < 0 && allUsedLetters.indexOf(userInput) >= 0){
+            game.validLetter();
+        }
         // if user input does NOT match then adds user input into letters already guessed and decrease guesses left
         else {
             guessesLeft--;
