@@ -25,13 +25,24 @@ var winAudio = new Audio("assets/sounds/win-effect.mp3");
 var errorAudio = new Audio("assets/sounds/error.mp3");
 var endAudio = new Audio("assets/sounds/thats-all-folks.mp3");
 
+// Variables for html ids
+var startPrint = document.getElementById("start");
+var winsPrint = document.getElementById("wins");
+var lossesPrint = document.getElementById("losses");
+var alreadyGuessedPrint = document.getElementById("already-guessed");
+var guessesLeftPrint = document.getElementById("guesses-left");
+var imgPrint = document.getElementById("img-id");
+var currentWordPrint = document.getElementById("current-word");
+var modalContentPrint = document.getElementById("modal-content");
+var modalWinLosePrint = document.getElementById("modal-win-lose");
+
 // The game 
 var game = {
     // Function for how the game initializes wth first keyup
     initializeGame() {
-        document.getElementById("start").innerHTML = "Try to guess the breed of the puppy one letter at a time!";
-        document.getElementById("wins").innerHTML = 0;
-        document.getElementById("losses").innerHTML = 0;
+        startPrint.innerHTML = "Try to guess the breed of the puppy one letter at a time!";
+        winsPrint.innerHTML = 0;
+        lossesPrint.innerHTML = 0;
         this.startGame();
         isFirstKey = false;
     },
@@ -40,17 +51,17 @@ var game = {
         // Emptying all the arrays to have clean slate each time the game restarts
         guessingWord = [];
         alreadyGuessed = [];
-        document.getElementById("already-guessed").innerHTML = alreadyGuessed;
+        alreadyGuessedPrint.innerHTML = alreadyGuessed;
         allUsedLetters = [];
         guessesLeft = 5;
-        document.getElementById("guesses-left").innerHTML = 5;
+        guessesLeftPrint.innerHTML = 5;
         // Picking a random index number to use for choosing dog breed and dog pic
         indexNumber = Math.floor(Math.random()*dogBreeds.length);
         chosenWord = dogBreeds[indexNumber];
-        document.getElementById("img-id").src=dogPics[indexNumber];
+        imgPrint.src=dogPics[indexNumber];
         // Deletes all classes for dog pic so it can be returned to low opacity at the start of each game
-        document.getElementById("img-id").className = "";
-        document.getElementById("img-id").classList.add("opacity1");
+        imgPrint.className = "";
+        imgPrint.classList.add("opacity1");
         // Setting up the guessing word array to have spaces matching the choosen word
         for(var i = 0; i < chosenWord.length; i++){
             if(chosenWord[i] === " "){
@@ -60,7 +71,7 @@ var game = {
                 guessingWord.push("_");
             }
         }
-        document.getElementById("current-word").innerHTML = guessingWord.join(" ");
+        currentWordPrint.innerHTML = guessingWord.join(" ");
     },
     // checks the user input is a valid letter of the alphabet and if they are reusing letters
     validLetter(){
@@ -69,15 +80,14 @@ var game = {
             userInput = event.key.toLowerCase();
             // if the user has used the same letter before, pop-up asks user to choose another letter
             if(allUsedLetters.indexOf(userInput) >= 0) {
-                document.getElementById("modal-content").innerHTML = "Please choose another letter!"
+                modalContentPrint.innerHTML = "Please choose another letter!"
                 this.playAudio(errorAudio);
                 $("#my-modal").modal("show");
             }    
         }
         // if not valid, pop-up asks user to choose a valid letter
         else {
-            console.log("validLetter else");
-            document.getElementById("modal-content").innerHTML = "Please choose a valid letter!";
+            modalContentPrint.innerHTML = "Please choose a valid letter!";
             this.playAudio(errorAudio);
             $("#my-modal").modal("show");
         }
@@ -93,7 +103,7 @@ var game = {
                     guessingWord.splice(j, 1, userInput);
                 }
             }
-            document.getElementById("current-word").innerHTML = guessingWord.join(" ");
+            currentWordPrint.innerHTML = guessingWord.join(" ");
         }
         else if (userInputIndex < 0 && allUsedLetters.indexOf(userInput) >= 0){
             game.validLetter();
@@ -101,24 +111,24 @@ var game = {
         // if user input does NOT match then adds user input into letters already guessed and decrease guesses left
         else {
             guessesLeft--;
-            document.getElementById("guesses-left").innerHTML = guessesLeft;
+            guessesLeftPrint.innerHTML = guessesLeft;
             alreadyGuessed.push(userInput);
-            document.getElementById("already-guessed").innerHTML = alreadyGuessed; 
+            alreadyGuessedPrint.innerHTML = alreadyGuessed; 
         }
     }, 
     // changes opacity of picture when there is an incorrect guess 
     changePicture(){
         if (guessesLeft < 5){
-            document.getElementById("img-id").classList.add("opacity2");
+            imgPrint.classList.add("opacity2");
         }
         if (guessesLeft < 4){
-            document.getElementById("img-id").classList.add("opacity3");
+            imgPrint.classList.add("opacity3");
         }
         if (guessesLeft < 3) {
-            document.getElementById("img-id").classList.add("opacity4");
+            imgPrint.classList.add("opacity4");
         }
         if (guessesLeft < 2) {
-            document.getElementById("img-id").classList.add("opacity5");
+            imgPrint.classList.add("opacity5");
         }
     },
     // To confirm if the user wins the game
@@ -134,9 +144,9 @@ var game = {
             // Compares guessing word to chosen word to confirm win
             if(guessingWord.join('') === chosenWord) {
                 wins++;
-                document.getElementById("wins").innerHTML = wins;
-                document.getElementById("img-id").classList.add("opacity5");
-                document.getElementById("modal-win-lose").innerHTML = "YOU GUESSED IT!";
+                winsPrint.innerHTML = wins;
+                imgPrint.classList.add("opacity5");
+                modalWinLosePrint.innerHTML = "YOU GUESSED IT!";
                 this.removeWords();
                 if(dogBreeds.length > 0){
                     winAudio.currentTime = 0;
@@ -151,8 +161,8 @@ var game = {
         // User losses if there are no more guesses left AND if there are still spaces left in their guess
         if(guessesLeft === 0 && guessingWord.indexOf("_" >= 0)) {
             losses++;
-            document.getElementById("losses").innerHTML = losses;
-            document.getElementById("modal-win-lose").innerHTML = "OH NO! YOU LOST!";
+            lossesPrint.innerHTML = losses;
+            modalWinLosePrint.innerHTML = "OH NO! YOU LOST!";
             this.removeWords();
             if(dogBreeds.length > 0){
                 loseAudio.currentTime = 0;
@@ -161,8 +171,8 @@ var game = {
             }
         }
     },
+    // Removing the choosen word from the arrays so it doesn't get repeated
     removeWords(){
-        // Removing the choosen word from the arrays so it doesn't get repeated
         dogBreeds.splice(indexNumber,1);
         dogPics.splice(indexNumber,1);
     },
@@ -174,13 +184,11 @@ var game = {
         y.pause();
     },
     endGame(){
-        var video = document.getElementById("end-video");
-        var url = $("#end-video").attr('src');
         if(dogBreeds.length == 0){
             $("#end-modal").modal("show"); 
             this.playAudio(endAudio);
         }
-    },
+    }
 }
 
 document.onkeyup = function() {
