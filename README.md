@@ -7,3 +7,5 @@ Hangman Game - A simple game designed with html, css, bootstrap, and javascript.
     * If you input an invalid character or a letter more than once, you will get a pop-up!
 1. With each incorrect guess the image will become clearer to give you a better hint.
 1. Enjoy the cute puppies!
+
+![Image of Dogs](https://github.com/joverlee521/Word-Guess-Game/blob/master/assets/images/breeds.jpg)
